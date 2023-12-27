@@ -1,6 +1,7 @@
 "use client";
 import { Avatar, Dropdown } from "flowbite-react";
 import { History } from "lucide-react";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 
@@ -33,7 +34,7 @@ export default function Navbar() {
           <Link href="/dashboard/profile">Profile</Link>
         </Dropdown.Item>
         <Dropdown.Divider />
-        <Dropdown.Item>Sign out</Dropdown.Item>
+        <Dropdown.Item onClick={signOut}>Sign out</Dropdown.Item>
       </Dropdown>
     </div>
   );

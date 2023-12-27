@@ -3,7 +3,7 @@ import React from "react";
 import { Avatar, Button, Dropdown, Navbar } from "flowbite-react";
 import { Codesandbox } from "lucide-react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 export default function NavbarSection() {
   // get session data in client side
   const { data: session, status } = useSession()
@@ -53,7 +53,7 @@ export default function NavbarSection() {
             <Dropdown.Item>Settings</Dropdown.Item>
             <Dropdown.Item>Earnings</Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item>Sign out</Dropdown.Item>
+            <Dropdown.Item onClick={signOut}>Sign out</Dropdown.Item>
           </Dropdown>
         )}
         <Link

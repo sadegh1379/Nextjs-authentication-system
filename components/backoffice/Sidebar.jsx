@@ -8,39 +8,95 @@ import {
   Settings,
   User2,
 } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 export default function Sidebar() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  console.log('session: ', session);
   const pathname = usePathname();
-  const navLinks = [
-    {
-      title: "Dashboard",
-      icon: Home,
-      href: "/dashboard",
-    },
-    {
-      title: "Profile",
-      icon: User2,
-      href: "/dashboard/profile",
-    },
-    {
-      title: "Products",
-      icon: Layers3,
-      href: "/dashboard/products",
-    },
-    {
-      title: "Categories",
-      icon: LayoutGrid,
-      href: "/dashboard/categories",
-    },
-    {
-      title: "Settings",
-      icon: Settings,
-      href: "/dashboard/settings",
-    },
-  ];
+
+  if (status === 'loading') {
+    return <p>Loading...</p>
+  }
+
+  if (status === 'unauthenticated') {
+    router.push('/login')
+  }
+
+  const navLists = {
+    ADMIN: [
+      {
+        title: "Dashboard",
+        icon: Home,
+        href: "/dashboard",
+      },
+      {
+        title: "Profile",
+        icon: User2,
+        href: "/dashboard/profile",
+      },
+      {
+        title: "Manage Products",
+        icon: Layers3,
+        href: "/dashboard/products",
+      },
+      {
+        title: "Manage Vendors",
+        icon: Layers3,
+        href: "/dashboard/products",
+      },
+      {
+        title: "Manage Categories",
+        icon: LayoutGrid,
+        href: "/dashboard/categories",
+      },
+      {
+        title: "Settings",
+        icon: Settings,
+        href: "/dashboard/settings",
+      },
+    ],
+    VENDOR: [
+      {
+        title: "Dashboard",
+        icon: Home,
+        href: "/dashboard",
+      },
+      {
+        title: "Profile",
+        icon: User2,
+        href: "/dashboard/profile",
+      },
+      {
+        title: "Manage Products",
+        icon: Layers3,
+        href: "/dashboard/products",
+      },
+      {
+        title: "Settings",
+        icon: Settings,
+        href: "/dashboard/settings",
+      },
+    ],
+    USER: [
+      {
+        title: "Dashboard",
+        icon: Home,
+        href: "/dashboard",
+      },
+      {
+        title: "Profile",
+        icon: User2,
+        href: "/dashboard/profile",
+      },
+    ]
+  }
+  
   return (
     <div className="w-[200px] min-h-screen bg-slate-800 text-slate-100  p-4">
       <Link href="#" className="flex items-center">
@@ -55,7 +111,7 @@ export default function Sidebar() {
         </span>
       </Link>
       <div className="my-6 flex flex-col space-y-2">
-        {navLinks.map((link, i) => {
+        {navLists[session?.user?.role]?.map((link, i) => {
           const Icon = link.icon;
           return (
             <Link
