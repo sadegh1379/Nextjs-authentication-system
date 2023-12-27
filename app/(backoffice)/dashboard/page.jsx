@@ -9,10 +9,10 @@ export default async function page() {
   if (!session) {
     redirect("/")
   }
-  
+
   return (
     <div>
-      <h2>Dashboard</h2>
+      <h2>welcome {session?.user?.name}</h2>
     </div>
   );
 }
