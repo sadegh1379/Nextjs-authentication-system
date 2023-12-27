@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// Enum for user roles
+enum UserRole {
+  ADMIN
+  USER
+  VENDOR
+}
+
+model User {
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  name           String?
+  email          String?    @unique
+  emailVerified  Boolean   @default(false)
+  emailVerifiedDate DateTime?
+  verificationRequestCount Int?
+  verificationToken String?
+  image          String?
+  hashedPassword String
+  password       String
+  role           UserRole   @default(USER) // Default role is USER
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  profile        UserProfile? // Link to user profile
+  vendorProfile   VendorProfile? // Link to organization for farmers
+}
+
+// Model for normal user profile
+model UserProfile {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @unique @db.ObjectId
+  // Add other fields for user onboarding information
+  // For example:
+  dob DateTime?
+  username String?
+  address    String?
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Model for organization (e.g., for Vendors)
+model VendorProfile {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @unique @db.ObjectId
+  // Add other fields for organization onboarding information
+  // For example:
+  shopName String?
+  location String?
+  phone String?
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
