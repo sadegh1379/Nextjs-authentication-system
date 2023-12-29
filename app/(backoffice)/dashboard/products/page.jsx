@@ -1,10 +1,17 @@
 "use client"
 import { useRole } from "@/hooks/use-role"
+import NotAuthorized from "@/components/backoffice/NotAuthorized"
 import { useSession } from "next-auth/react";
 
 export default function Products() {
     const { data: session } = useSession();
-    const { isAdmin, isUser, isVendor } = useRole(session);
+  const { isAdmin, isUser, isVendor } = useRole(session);
+  
+  if (isUser) {
+    return (
+      <NotAuthorized />
+    )
+  }
 
   return (
       <div className="flex pt-5 justify-center items-center flex-col">

@@ -12,7 +12,7 @@ export default function VerifyAccount() {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
               Verify Account
             </h1>
-            <Alert color="failure" icon={HiInformationCircle}>
+            <Alert color="warning" icon={HiInformationCircle}>
               <span className="font-medium">Please Check your Email!</span> We
               have sent you a Verification Link and Click on the Link to Verify
               your Account. Thank you!

@@ -48,7 +48,7 @@ export default function Sidebar() {
       {
         title: "Manage Vendors",
         icon: Layers3,
-        href: "/dashboard/products",
+        href: "/dashboard/vendors",
       },
       {
         title: "Manage Categories",
