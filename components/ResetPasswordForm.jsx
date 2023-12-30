@@ -38,7 +38,11 @@ export default function ResetPasswordForm() {
         reset();
         router.push('/login')
       } else {
-        toast.error("Password not updated successfully")
+        if (res.status === 401) {
+          toast.error("User Reset link has been expired. Please try again")
+        } else {
+          toast.error("Password not updated successfully")
+        }
         setLoading(false);
       }
     } catch (error) {
@@ -101,7 +105,7 @@ export default function ResetPasswordForm() {
               fill="currentColor"
             />
           </svg>
-          Changing you in please wait...
+          sending, please wait...
         </button>
       ) : (
         <button

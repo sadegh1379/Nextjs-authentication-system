@@ -100,7 +100,7 @@ export default function ForgotPasswordForm() {
               fill="currentColor"
             />
           </svg>
-          sending you in please wait...
+          sending, please wait...
         </button>
       ) : (
         <button

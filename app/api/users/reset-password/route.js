@@ -23,6 +23,16 @@ export async function PUT(request) {
         },
         { status: 404 }
       );
+    }
+    
+    if (!existingUser.passwordResetToken) {
+        return NextResponse.json(
+          {
+            data: null,
+            message: `User Reset link has been expired. Please try again`,
+          },
+          { status: 401 }
+        );
       }
       
     // Encrypt the Password =>bcrypt
@@ -34,7 +44,8 @@ export async function PUT(request) {
           },
         data: {
             password,
-            hashedPassword
+            hashedPassword,
+            passwordResetToken: null,
         },
     });
     
