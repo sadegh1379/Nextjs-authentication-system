@@ -62,7 +62,7 @@ export default function LoginForm() {
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify({ token, id: userId })
+              body: JSON.stringify({ id: userId })
             })
             if (res.ok) {
               toast.success("You Account has been Verified")
@@ -77,6 +77,7 @@ export default function LoginForm() {
         }
       
       }
+      setIsVerifying(false);
     }
     verify()
   }, [])
@@ -84,10 +85,7 @@ export default function LoginForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 " action="#">
       {isVerifying ? (
-        <div class="bg-white w-full my-6 rounded shadow-md overflow-hidden">
-          <div class="bg-blue-500 text-white px-4 py-2">
-              <span class="text-lg font-bold">Verification</span>
-          </div>
+        <div class="bg-white w-full my-6 rounded overflow-hidden">
           <div class="p-4">
               <div class="flex items-center justify-center">
                   <svg class="animate-spin h-12 w-12 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none"

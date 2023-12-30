@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function PUT(request) {
     try {
-    const { token, id } = await request.json();
+    const { id } = await request.json();
     const user = await db.user.findUnique({
       where: {
         id,
