@@ -20,7 +20,6 @@ export default function RegisterForm({ role }) {
   async function onSubmit(data) {
     try {
       data.role = role;
-      console.log(data);
       setLoading(true);
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
       const response = await fetch(`${baseUrl}/api/users`, {
@@ -37,8 +36,7 @@ export default function RegisterForm({ role }) {
         setLoading(false);
         toast.success("User Created Successfully");
         reset();
-        router.push("/login");
-        console.log('data:', responseData.data)
+        router.push(`/verify-account/${responseData.data.id}`);
       } else {
         setLoading(false);
         if (response.status === 409) {

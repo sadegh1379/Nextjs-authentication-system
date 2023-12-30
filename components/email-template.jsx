@@ -30,6 +30,7 @@ export const EmailTemplate = ({
           width="32"
           height="32"
           alt="auth system"
+          style={image}
         />
         <Text style={title}>
           Verify your account
@@ -113,3 +114,10 @@ const footer = {
   textAlign: 'center',
   marginTop: '60px',
 };
+
+const image = {
+  width: '100px',
+  height: '100px',
+  borderRadius: '50px',
+  margin: '0 auto'
+}

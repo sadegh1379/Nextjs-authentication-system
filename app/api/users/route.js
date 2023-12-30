@@ -47,7 +47,7 @@ export async function POST(request) {
     });
     
     // send email with token to user for verification
-    const redirectUrl = `login?token=${token}&&id=${newUser.id}`
+    const redirectUrl = `login?token=${token}&id=${newUser.id}`
     const { data, error } = await resend.emails.send({
       from: 'Acme <onboarding@resend.dev>',
       // to: ['akbarisadegh382@gmail.com'],
@@ -58,7 +58,7 @@ export async function POST(request) {
   
     return NextResponse.json(
       {
-        data: null,
+        data: newUser,
         message: "User Created Successfully",
       },
       { status: 201 }
