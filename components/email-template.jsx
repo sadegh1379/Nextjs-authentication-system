@@ -1,75 +1,115 @@
-import React from 'react';
+import {
+  Body,
+  Button,
+  Container,
+  Head,
+  Html,
+  Img,
+  Link,
+  Preview,
+  Section,
+  Text,
+} from '@react-email/components';
+import * as React from 'react';
 
-const EmailTemplate = ({ token }) => {
-  const containerStyle = {
-    backgroundColor: '#f7f7f7',
-    minHeight: '100vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '20px',
-    fontFamily: 'Arial, sans-serif',
-  };
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
-  const cardStyle = {
-    maxWidth: '500px',
-    width: '100%',
-    backgroundColor: '#ffffff',
-    borderRadius: '8px',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-    padding: '40px',
-    textAlign: 'center',
-  };
+export const EmailTemplate = ({
+  username,
+  redirectUrl = "login"
+}) => (
+  <Html>
+    <Head />
+    <Preview>
+      A fine-grained personal access token has been added to your account
+    </Preview>
+    <Body style={main}>
+      <Container style={container}>
+        <Img
+          src={`${baseUrl}/static/sadegh.jpg`}
+          width="32"
+          height="32"
+          alt="auth system"
+        />
+        <Text style={title}>
+          Verify your account
+        </Text>
 
-  const headingStyle = {
-    fontSize: '28px',
-    fontWeight: 'bold',
-    marginBottom: '20px',
-    color: '#333333',
-  };
+        <Section style={section}>
+          <Text style={text}>
+            Hey <strong>{username}</strong>!
+          </Text>
+          <Text style={text}>
+            Thanks you, for creating an account with Us. we request you to onClick
+           on the link  below in order to verify your account. 
+          </Text>
 
-  const textStyle = {
-    fontSize: '16px',
-    color: '#555555',
-    lineHeight: '1.6',
-  };
+          <Button href={`${baseUrl}/${redirectUrl}`} style={button}>verify your account</Button>
+        </Section>
+        <Text style={links}>
+          <Link style={link}>Your security audit log</Link> ・{' '}
+          <Link style={link}>Contact support</Link>
+        </Text>
 
-  const tokenStyle = {
-    fontSize: '18px',
-    color: '#1a73e8',
-    fontWeight: 'bold',
-  };
+        <Text style={footer}>
+          Auth system by s.akbari, Inc. ・88 Colin P Kelly Jr Street ・San Francisco, CA 94107
+        </Text>
+      </Container>
+    </Body>
+  </Html>
+);
 
-  const buttonStyle = {
-    backgroundColor: '#1a73e8',
-    color: '#ffffff',
-    fontSize: '16px',
-    padding: '12px 24px',
-    borderRadius: '5px',
-    textDecoration: 'none',
-    display: 'inline-block',
-    marginTop: '30px',
-  };
-
-  const verifyURL = `https://sadegh-authentication-system.vercel.app/verify-account/${token}`;
-
-  return (
-    <div style={containerStyle}>
-      <div style={cardStyle}>
-        <h1 style={headingStyle}>Welcome to Our sadegh-authentication-system!</h1>
-        <p style={textStyle}>
-          Thank you for joining us. Your unique verification token is:{' '}
-          <span style={tokenStyle}>{token}</span>
-        </p>
-        <p style={textStyle}>
-          We're thrilled to have you on board! To get started, please verify your account by clicking the button below.
-        </p>
-        <a href={verifyURL} style={buttonStyle}>
-          Verify Account
-        </a>
-      </div>
-    </div>
-  );
+const main = {
+  backgroundColor: '#ffffff',
+  color: '#24292e',
+  fontFamily:
+    '-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji"',
 };
 
-export default EmailTemplate;
+const container = {
+  width: '480px',
+  margin: '0 auto',
+  padding: '20px 0 48px',
+};
+
+const title = {
+  fontSize: '24px',
+  lineHeight: 1.25,
+};
+
+const section = {
+  padding: '24px',
+  border: 'solid 1px #dedede',
+  borderRadius: '5px',
+  textAlign: 'center',
+};
+
+const text = {
+  margin: '0 0 10px 0',
+  textAlign: 'left',
+};
+
+const button = {
+  fontSize: '14px',
+  backgroundColor: '#28a745',
+  color: '#fff',
+  lineHeight: 1.5,
+  borderRadius: '0.5em',
+  padding: '0.75em 1.5em',
+};
+
+const links = {
+  textAlign: 'center',
+};
+
+const link = {
+  color: '#0366d6',
+  fontSize: '12px',
+};
+
+const footer = {
+  color: '#6a737d',
+  fontSize: '12px',
+  textAlign: 'center',
+  marginTop: '60px',
+};

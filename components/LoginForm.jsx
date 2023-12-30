@@ -1,14 +1,17 @@
 "use client";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
+import { getData } from "../lib/getData";
+
 export default function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const {
     register,
     handleSubmit,
@@ -42,6 +45,22 @@ export default function LoginForm() {
       toast.error("Its seems something is wrong with your Network");
     }
   }
+
+  useEffect(() => {
+    const token = searchParams.get('token');
+    const userId = searchParams.get('id');
+    if (!userId || !token) return;
+
+    // verify
+    async function verify() {
+      const data = await getData(`users/${userId}`)
+      console.log('user data:', data);
+      if (data) {
+        // update the email verification to true
+      }
+    }
+    verify()
+  }, [])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 " action="#">

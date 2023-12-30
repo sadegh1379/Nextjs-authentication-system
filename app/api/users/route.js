@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from 'uuid';
 import base64url from "base64url";
-import EmailTemplate from '../../../components/email-template'
+import { EmailTemplate } from '../../../components/email-template'
 import { Resend } from 'resend';
 
 export async function POST(request) {
@@ -35,29 +35,27 @@ export async function POST(request) {
     // token
     const token = base64url.encode(rawToken);
 
+    const newUser = await db.user.create({
+      data: {
+        name,
+        email,
+        password,
+        hashedPassword,
+        role,
+        verificationToken: token
+      },
+    });
+    
     // send email with token to user for verification
+    const redirectUrl = `login?token=${token}&&id=${newUser.id}`
     const { data, error } = await resend.emails.send({
       from: 'Acme <onboarding@resend.dev>',
       // to: ['akbarisadegh382@gmail.com'],
       to: email,
       subject: 'Account verification Auth System',
-      react: EmailTemplate({ token }),
+      react: EmailTemplate({ redirectUrl, username: name }),
     });
-
-    console.log('token: ', token);
-    console.log('mail send: ', data);
-
-    // const newUser = await db.user.create({
-    //   data: {
-    //     name,
-    //     email,
-    //     password,
-    //     hashedPassword,
-    //     role,
-    //     verificationToken: token
-    //   },
-    // });
-    // console.log(newUser);
+  
     return NextResponse.json(
       {
         data: null,
