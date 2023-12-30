@@ -44,8 +44,8 @@ export async function POST(request) {
       react: EmailTemplate({ token }),
     });
 
-    console.log('token: ' + token);
-    console.log('mail send: ' + data);
+    console.log('token: ', token);
+    console.log('mail send: ', data);
 
     // const newUser = await db.user.create({
     //   data: {
