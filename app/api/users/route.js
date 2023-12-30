@@ -53,7 +53,13 @@ export async function POST(request) {
       // to: ['akbarisadegh382@gmail.com'],
       to: email,
       subject: 'Account verification Auth System',
-      react: EmailTemplate({ redirectUrl, username: name }),
+      react: EmailTemplate({
+        redirectUrl,
+        username: name,
+        title: 'Verify Account',
+        description: "Thanks you, for creating an account with Us. we request you to onClick on the link  below in order to verify your account.",
+        linkText: 'Verify Account'
+      }),
     });
   
     return NextResponse.json(

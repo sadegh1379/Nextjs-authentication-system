@@ -7,7 +7,11 @@ import toast from "react-hot-toast";
 import Link from "next/link";
 import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
+import { HiInformationCircle } from "react-icons/hi";
+import { Alert } from "flowbite-react";
+
 export default function ForgotPasswordForm() {
+  const [showNotif, setShowNotif] = useState(false)
   const router = useRouter();
   const {
     register,
@@ -18,33 +22,39 @@ export default function ForgotPasswordForm() {
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(data) {
-    console.log(data);
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     try {
       setLoading(true);
-      console.log("Attempting to sign in with credentials:", data);
-      const loginData = await signIn("credentials", {
-        ...data,
-        redirect: false,
-      });
-      console.log("SignIn response:", loginData);
-      if (loginData?.error) {
+      const res = await fetch(`${baseUrl}/api/users/forgot-password`, {
+        method: 'PUT',
+        'Content-Type': 'application/json',
+        body: JSON.stringify(data)
+      })
+      if (res.ok) {
         setLoading(false);
-        toast.error("Sign-in error: Check your credentials");
-      } else {
-        // Sign-in was successful
-        toast.success("Login Successful");
+        setShowNotif(true)
         reset();
-        router.push("/");
+        toast.success("Email sent successfully")
+      } else {
+        toast.error("Email not sent successfully")
+        setLoading(false);
       }
     } catch (error) {
       setLoading(false);
       console.error("Network Error:", error);
       toast.error("Its seems something is wrong with your Network");
+      toast.error(error?.message);
     }
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 " action="#">
+      {showNotif && (
+        <Alert color="success" icon={HiInformationCircle}>
+              <span className="font-medium">Please Check your Email!</span> We
+              have sent you a reset password Link and Click on the Link to create new password.
+        </Alert>
+      )}
       <div>
         <label
           htmlFor="email"
@@ -90,7 +100,7 @@ export default function ForgotPasswordForm() {
               fill="currentColor"
             />
           </svg>
-          Signing you in please wait...
+          sending you in please wait...
         </button>
       ) : (
         <button

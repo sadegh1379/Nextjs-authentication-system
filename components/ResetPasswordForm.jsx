@@ -1,14 +1,19 @@
 "use client";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
+
 export default function ResetPasswordForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const token = searchParams.get('token');
+  const userId = searchParams.get('id');
+  
   const {
     register,
     handleSubmit,
@@ -18,23 +23,23 @@ export default function ResetPasswordForm() {
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(data) {
-    console.log(data);
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    data.id = userId;
     try {
       setLoading(true);
-      console.log("Attempting to sign in with credentials:", data);
-      const loginData = await signIn("credentials", {
-        ...data,
-        redirect: false,
-      });
-      console.log("SignIn response:", loginData);
-      if (loginData?.error) {
+      const res = await fetch(`${baseUrl}/api/users/reset-password`, {
+        method: 'PUT',
+        'Content-Type': 'application/json',
+        body: JSON.stringify(data)
+      })
+      if (res.ok) {
         setLoading(false);
-        toast.error("Sign-in error: Check your credentials");
-      } else {
-        // Sign-in was successful
-        toast.success("Login Successful");
+        toast.success("Password updated successfully")
         reset();
-        router.push("/");
+        router.push('/login')
+      } else {
+        toast.error("Password not updated successfully")
+        setLoading(false);
       }
     } catch (error) {
       setLoading(false);
@@ -42,6 +47,12 @@ export default function ResetPasswordForm() {
       toast.error("Its seems something is wrong with your Network");
     }
   }
+  
+  useEffect(() => {
+    if (!token || !userId) {
+      router.push('/login');
+    }
+  }, [])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 " action="#">
