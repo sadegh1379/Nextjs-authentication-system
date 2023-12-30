@@ -54,8 +54,7 @@ export async function PUT(request) {
     const userId = existingUser.id
     const email = existingUser.email
     const { data, error } = await resend.emails.send({
-      from: 'Acme <onboarding@resend.dev>',
-      // to: ['akbarisadegh382@gmail.com'],
+      from: 'Auth System <sadeghAkbari-authSystem@resend.dev>',
       to: email,
       subject: 'Your Account password has been updated',
       react: EmailTemplate({

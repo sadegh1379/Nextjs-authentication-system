@@ -20,6 +20,7 @@ export default function RegisterForm({ role }) {
   async function onSubmit(data) {
     try {
       data.role = role;
+      data.image = 'https://sadegh-authentication-system.vercel.app/static/sadegh.jpg'
       setLoading(true);
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
       const response = await fetch(`${baseUrl}/api/users`, {

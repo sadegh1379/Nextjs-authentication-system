@@ -45,7 +45,7 @@ export async function PUT(request) {
     const userId = existingUser.id
     const redirectUrl = `reset-password?token=${token}&id=${userId}`
     const { data, error } = await resend.emails.send({
-      from: 'Acme <onboarding@resend.dev>',
+      from: 'Auth System <sadeghAkbari-authSystem@resend.dev>',
       // to: ['akbarisadegh382@gmail.com'],
       to: email,
       subject: 'Account Reset Password',

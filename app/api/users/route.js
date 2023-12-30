@@ -10,7 +10,7 @@ export async function POST(request) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   try {
     //extract the credentials
-    const { name, email, password, role } = await request.json();
+    const { name, email, password, role, image } = await request.json();
     //Check if the user Already exists in the db
     const existingUser = await db.user.findUnique({
       where: {
@@ -39,6 +39,7 @@ export async function POST(request) {
       data: {
         name,
         email,
+        image,
         password,
         hashedPassword,
         role,
@@ -49,7 +50,7 @@ export async function POST(request) {
     // send email with token to user for verification
     const redirectUrl = `login?token=${token}&id=${newUser.id}`
     const { data, error } = await resend.emails.send({
-      from: 'Acme <onboarding@resend.dev>',
+      from: 'Auth System <sadeghAkbari-authSystem@resend.dev>',
       // to: ['akbarisadegh382@gmail.com'],
       to: email,
       subject: 'Account verification Auth System',

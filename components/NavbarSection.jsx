@@ -17,6 +17,8 @@ export default function NavbarSection() {
     console.log("authenticated user", session.user)
   }
 
+  const user = session?.user;
+
   return (
     <Navbar fluid rounded>
       <Navbar.Brand href="/">
@@ -44,9 +46,9 @@ export default function NavbarSection() {
             }
           >
             <Dropdown.Header>
-              <span className="block text-sm">Bonnie Green</span>
+              <span className="block text-sm">{ user?.name}</span>
               <span className="block truncate text-sm font-medium">
-                name@flowbite.com
+                {user?.email}
               </span>
             </Dropdown.Header>
             <Dropdown.Item>Dashboard</Dropdown.Item>
