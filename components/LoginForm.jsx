@@ -146,7 +146,7 @@ export default function LoginForm() {
               </small>
             )}
           </div>
-          <div className="flex gap-4 items-center">
+          <div className="gap-4 items-center py-2">
             <Link
               href="/forgot-password"
               className="shrink-0 font-medium text-blue-600 hover:underline dark:text-blue-500"
@@ -192,26 +192,6 @@ export default function LoginForm() {
             <span className="mx-2">or</span>
             <div className="w-full bg-slate-500 h-[1px]"></div>
           </div>
-          <div className="">
-            <button
-              type="button"
-              className="w-full text-slate-950 bg-white hover:bg-slate-50 focus:ring-4 focus:outline-none focus:ring-slate-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center justify-center flex items-center dark:focus:ring-slate-100 me-2 mb-4 border border-slate-200"
-              onClick={() => signIn("google")}
-            >
-              <FaGoogle className="mr-2 text-red-600 w-4 h-4" />
-              Sign in with Google
-            </button>
-            <button
-              onClick={() => signIn("github")}
-              type="button"
-              className="w-full justify-center text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2 mb-2"
-            >
-              {/* Icon */}
-              <FaGithub className="mr-2 w-4 h-4" />
-              Sign in with Github
-            </button>
-          </div>
-
           <p className="text-sm font-light text-gray-500 dark:text-gray-400">
             Already have an account?{" "}
             <Link

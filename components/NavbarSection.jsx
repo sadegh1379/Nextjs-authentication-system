@@ -40,7 +40,7 @@ export default function NavbarSection() {
             label={
               <Avatar
                 alt="User settings"
-                img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                img={`${user?.image ?? 'https://flowbite.com/docs/images/people/profile-picture-5.jpg'}`}
                 rounded
               />
             }
