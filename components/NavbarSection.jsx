@@ -29,7 +29,7 @@ export default function NavbarSection() {
           alt="Flowbite React Logo"
         /> */}
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          Desishub
+          Auth System
         </span>
       </Navbar.Brand>
       <div className="flex md:order-2">

@@ -107,7 +107,7 @@ export default function Sidebar() {
           alt="Flowbite React Logo"
         /> */}
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          Desishub
+          Auth System
         </span>
       </Link>
       <div className="my-6 flex flex-col space-y-2">
